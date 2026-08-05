@@ -77,7 +77,12 @@ void unload_png_files(PNG_files* files)
     }
 }
 
-void create_cursors(PNG_files* files, cursors* out)
+void create_cursors(
+    PNG_files* files, 
+    cursors* out, 
+    uint16_t xhotspot, 
+    uint16_t yhotspot
+)
 {
     assert(files != NULL && "Skill issue");
     for (size_t i = 0; i < files->count; i++) {
@@ -88,8 +93,8 @@ void create_cursors(PNG_files* files, cursors* out)
             f->size, 
             config.width, 
             config.height, 
-            0, 
-            0, 
+            xhotspot, 
+            yhotspot, 
             &o
         );
         nob_da_append(out, cur);
@@ -138,22 +143,23 @@ void unload_ani_cursor(ANI_cursor* ani)
     ani->size   = 0;
 }
 
-int main(int argc, char** argv)
+void build_win_cursor(const char* name, const char* folder)
 {
-    const char* folder ="./tests/";
-
     char* buffer = malloc(TEMP_BUFFER);
-    nob_mkdir_if_not_exists(config.output);
+
+    snprintf(buffer, TEMP_BUFFER, "%s/windows", config.output);
+    nob_mkdir_if_not_exists(buffer);
+
     for (int i = 0; i < NOB_ARRAY_LEN(WINDOWS_MAPPING); i++) {
         cursor_mapping_t schema = WINDOWS_MAPPING[i];
         PNG_files files = {0};
         snprintf(buffer, TEMP_BUFFER, "./%s/%s", folder, schema.folder);
         get_frames_from_folder(&files, buffer);
         cursors cur = {0};
-        create_cursors(&files, &cur);
+        create_cursors(&files, &cur, schema.xhotspot, schema.yhotspot);
 
         ANI_cursor ani = create_ani_cursor(&cur);
-        snprintf(buffer, TEMP_BUFFER, "%s/%s.ani", config.output, schema.name);
+        snprintf(buffer, TEMP_BUFFER, "%s/windows/%s.ani", config.output, schema.name);
         save_ani_cursor(&ani, buffer);
 
         nob_log(NOB_INFO, "schema: %s - animation %zu", schema.name, files.count);
@@ -161,6 +167,27 @@ int main(int argc, char** argv)
         unload_cursors(&cur);
         unload_png_files(&files);
     }
+
+    free(buffer);
+}
+
+void build_x11_cursor(const char* name, const char* folder)
+{
+}
+
+int main(int argc, char** argv)
+{
+    char* buffer = malloc(TEMP_BUFFER);
+
+    nob_log(NOB_INFO, "Building cursor pack: %s", DEFAULT_NAME);
+    nob_mkdir_if_not_exists(config.output);
+    snprintf(buffer, TEMP_BUFFER, "%s/linux-x11", config.output);
+    nob_mkdir_if_not_exists(buffer);
+
+    free(buffer);
+    build_win_cursor(DEFAULT_NAME, "tests");
+    build_x11_cursor(DEFAULT_NAME, "tests");
+
 
     return 0;
 }
