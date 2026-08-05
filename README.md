@@ -9,6 +9,8 @@ For now this project is not fully open-sourced as I using my own custom library
 for creating the cursor (In C of course), the reason for me not to fully open-source is
 from my life circumstance, feel free to deduce why.
 
+Go visit my [Ko-fi](https://ko-fi.com/unknownrori) page for cursor stuff
+
 ## Demo
 
 ![](./docs/lilith-itou-cursor.gif)
