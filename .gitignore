@@ -1,0 +1,11 @@
+builddir/
+build/
+dist/
+compile_commands.json
+
+*.exe
+*.o
+*.dll
+*.a
+
+install_inf.h
