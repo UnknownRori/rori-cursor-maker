@@ -14,6 +14,7 @@
 #include <rcursor_x11.h>
 
 #include "config.h"
+#include "install_inf.h"
 
 typedef struct {
     uint8_t* buffer;
@@ -167,6 +168,12 @@ void build_win_cursor(const char* name, const char* folder)
         unload_cursors(&cur);
         unload_png_files(&files);
     }
+
+    snprintf(buffer, TEMP_BUFFER, "%s/windows/" INSTALL_FILE, config.output);
+    Nob_String_Builder sb = create_windows_metadata(name);
+    FILE* f = fopen(buffer, "wb+");
+    fwrite(sb.items, 1, sb.count, f);
+    fclose(f);
 
     free(buffer);
 }
