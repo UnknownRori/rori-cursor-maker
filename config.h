@@ -3,6 +3,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#define TEMP_BUFFER         4096
 #define FRAME_PNG_FORMAT    "frame%04d.png"
 #define OUTPUT_DIR          "dist"
 
