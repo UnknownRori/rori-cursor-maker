@@ -9,3 +9,4 @@ compile_commands.json
 *.a
 
 install_inf.h
+theme_x11.h

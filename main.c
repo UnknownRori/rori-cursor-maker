@@ -15,6 +15,7 @@
 
 #include "config.h"
 #include "install_inf.h"
+#include "theme_x11.h"
 
 typedef struct {
     uint8_t* buffer;
@@ -102,6 +103,30 @@ void create_cursors(
     }
 }
 
+void create_xcursors(
+    PNG_files* files, 
+    cursors* out, 
+    uint16_t xhotspot, 
+    uint16_t yhotspot
+)
+{
+    assert(files != NULL && "Skill issue");
+    for (size_t i = 0; i < files->count; i++) {
+        PNG* f = &files->items[i];
+        size_t o = 0;
+        uint8_t* cur = create_xcur_buffer_from_memory(
+            f->buffer, 
+            f->size, 
+            config.width, 
+            config.height, 
+            xhotspot, 
+            yhotspot, 
+            &o
+        );
+        nob_da_append(out, cur);
+    }
+}
+
 void unload_cursors(cursors* files)
 {
     assert(files != NULL && "Skill issue");
@@ -115,6 +140,23 @@ ANI_cursor create_ani_cursor(cursors* files)
     assert(files != NULL && "Skill issue");
     size_t out = 0;
     uint8_t* ani =  create_ani_buffer_from_cur_buffer(
+        (const uint8_t**)files->items, 
+        files->count, 
+        config.rate, 
+        &out
+    );
+    // nob_log(NOB_INFO, "ANI Cursor: created (%zu bytes)", out);
+    return (ANI_cursor) {
+        .buffer = ani,
+        .size = out,
+    };
+}
+
+ANI_cursor create_xani_cursor(cursors* files)
+{
+    assert(files != NULL && "Skill issue");
+    size_t out = 0;
+    uint8_t* ani =  create_xani_buffer_from_cur_buffer(
         (const uint8_t**)files->items, 
         files->count, 
         config.rate, 
@@ -180,6 +222,38 @@ void build_win_cursor(const char* name, const char* folder)
 
 void build_x11_cursor(const char* name, const char* folder)
 {
+    char* buffer = malloc(TEMP_BUFFER);
+
+    snprintf(buffer, TEMP_BUFFER, "%s/x11", config.output);
+    nob_mkdir_if_not_exists(buffer);
+    snprintf(buffer, TEMP_BUFFER, "%s/x11/cursors", config.output);
+    nob_mkdir_if_not_exists(buffer);
+
+    for (int i = 0; i < NOB_ARRAY_LEN(X11_MAPPING); i++) {
+        cursor_mapping_t schema = X11_MAPPING[i];
+        PNG_files files = {0};
+        snprintf(buffer, TEMP_BUFFER, "./%s/%s", folder, schema.folder);
+        get_frames_from_folder(&files, buffer);
+        cursors cur = {0};
+        create_xcursors(&files, &cur, schema.xhotspot, schema.yhotspot);
+
+        ANI_cursor ani = create_xani_cursor(&cur);
+        snprintf(buffer, TEMP_BUFFER, "%s/x11/cursors/%s", config.output, schema.name);
+        save_ani_cursor(&ani, buffer);
+
+        nob_log(NOB_INFO, "schema: %s - animation %zu", schema.name, files.count);
+        unload_ani_cursor(&ani);
+        unload_cursors(&cur);
+        unload_png_files(&files);
+    }
+
+    snprintf(buffer, TEMP_BUFFER, "%s/x11/" THEME_FILE, config.output);
+    Nob_String_Builder sb = create_x11_metadata(name);
+    FILE* f = fopen(buffer, "wb+");
+    fwrite(sb.items, 1, sb.count, f);
+    fclose(f);
+
+    free(buffer);
 }
 
 int main(int argc, char** argv)
@@ -188,8 +262,6 @@ int main(int argc, char** argv)
 
     nob_log(NOB_INFO, "Building cursor pack: %s", DEFAULT_NAME);
     nob_mkdir_if_not_exists(config.output);
-    snprintf(buffer, TEMP_BUFFER, "%s/linux-x11", config.output);
-    nob_mkdir_if_not_exists(buffer);
 
     free(buffer);
     build_win_cursor(DEFAULT_NAME, "tests");
