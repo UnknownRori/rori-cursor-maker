@@ -71,7 +71,7 @@ void build_x11_cursor(const char* name)
         cursors cursors = {0};
         create_xcursors(pngs, &cursors, map.xhotspot, map.yhotspot);
         ANI_cursor cursor = create_xani_cursor(&cursors);
-        snprintf(buffer, sizeof(buffer), "%s/x11/cursors/%s.ani", config.output, name);
+        snprintf(buffer, sizeof(buffer), "%s/x11/cursors/%s", config.output, name);
         if (!save_buffer(buffer, cursor.buffer, cursor.size))
             nob_log(NOB_INFO, "Failed to save the file");
         unload_cursor(&cursors);
