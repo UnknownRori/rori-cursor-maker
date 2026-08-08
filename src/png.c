@@ -26,8 +26,8 @@ void get_png_frames_from_folder(PNG_files* out, const char* name)
         uint8_t* png = stbi_load(buffer, &w, &h, &c, 4);
         if (png == NULL) return;
         
-        int new_width  = w * SCALE;
-        int new_height = h * SCALE;
+        int new_width  = w * config.scale;
+        int new_height = h * config.scale;
 
         uint8_t* upscaled = malloc(new_width * new_height * 4);
         assert(upscaled != NULL && "Buy more RAM lol.");
@@ -68,6 +68,10 @@ void load_folders(const char* path)
     char buffer[1024] = {0};
     for (size_t i = 0 ; i < TOTAL_FOLDER_MAPPING; i++) {
         snprintf(buffer, sizeof(buffer), "%s/%s", path, FOLDER_MAPPING[i]);
+        if (!nob_file_exists(buffer)) {
+            nob_log(NOB_ERROR, "folder '%s' is missing, stopping the cursor creation...", buffer);
+            exit(69);
+        }
         get_png_frames_from_folder(&loaded[i], buffer);
         nob_log(NOB_INFO, "loading: '%s' (animation frames: %zu)", FOLDER_MAPPING[i], loaded[i].count);
     }

@@ -1,10 +1,11 @@
 #include "config.h"
 #include <string.h>
 
-const config_t config = {
-    .width   = 32 * SCALE,
-    .height  = 32 * SCALE,
+config_t config = {
+    .width   = 32,
+    .height  = 32,
     .rate    = 3 ,
+    .scale   = SCALE,
     .output  = OUTPUT_DIR,
 };
 
@@ -43,18 +44,18 @@ const cursor_mapping_t WINDOWS_MAPPING[] = {
     {"Busy"       , "busy"          , 0 , 0  },
     {"Working"    , "working"       , 0 , 0  },
 
-    {"Text"       , "text"          , 4 * SCALE , 4 * SCALE  },
+    {"Text"       , "text"          , 4 , 4  },
     {"Handwriting", "pen"           , 0 , 0  },
-    {"Precision"  , "precision"     , 4 * SCALE , 4 * SCALE  },
+    {"Precision"  , "precision"     , 4 , 4  },
     {"Unavailable", "unavailable"   , 0 , 0  },
     {"Pin"        , "pin"           , 0 , 0  },
     {"Person"    , "person"        , 0 , 0  },
 
-    {"Move"      , "move"          , 18 * SCALE, 16 * SCALE },
-    {"Diagonal1" , "diagonal1"     , 18 * SCALE, 16 * SCALE },
-    {"Diagonal2" , "diagonal2"     , 18 * SCALE, 16 * SCALE },
-    {"Vertical"  , "vertical"      , 18 * SCALE, 16 * SCALE },
-    {"Horizontal", "horizontal"    , 18 * SCALE, 16 * SCALE },
+    {"Move"      , "move"          , 18, 16 },
+    {"Diagonal1" , "diagonal1"     , 18, 16 },
+    {"Diagonal2" , "diagonal2"     , 18, 16 },
+    {"Vertical"  , "vertical"      , 18, 16 },
+    {"Horizontal", "horizontal"    , 18, 16 },
 
     {"Alternate" , "alternate"     , 0 , 0  },
 };
@@ -73,7 +74,7 @@ const cursor_mapping_t X11_MAPPING[] = {
     {"pointer",             "link",         0,  0  },
     {"pointing_hand",       "link",         0,  0  },
 
-    {"watch",               "busy",         0,  0  },
+    {"watch",               "busy",          0,  0  },
     {"wait",                "busy",         0,  0  },
 
     {"left_ptr_watch",      "working",      0,  0  },
@@ -97,33 +98,33 @@ const cursor_mapping_t X11_MAPPING[] = {
     {"dnd-copy",            "person",       0,  0  },
     {"copy",                "person",       0,  0  },
 
-    {"fleur",               "move",         18 * SCALE, 16 * SCALE },
-    {"move",                "move",         18 * SCALE, 16 * SCALE },
-    {"size_all",            "move",         18 * SCALE, 16 * SCALE },
+    {"fleur",               "move",         18, 16 },
+    {"move",                "move",         18, 16 },
+    {"size_all",            "move",         18, 16 },
 
-    {"nwse-resize",         "diagonal1",    18 * SCALE, 16 * SCALE },
-    {"size_nw_se",          "diagonal1",    18 * SCALE, 16 * SCALE },
-    {"top_left_corner",     "diagonal1",    18 * SCALE, 16 * SCALE },
-    {"bottom_right_corner", "diagonal1",    18 * SCALE, 16 * SCALE },
+    {"nwse-resize",         "diagonal1",    18, 16 },
+    {"size_nw_se",          "diagonal1",    18, 16 },
+    {"top_left_corner",     "diagonal1",    18, 16 },
+    {"bottom_right_corner", "diagonal1",    18, 16 },
 
-    {"nesw-resize",         "diagonal2",    18 * SCALE, 16 * SCALE },
-    {"size_ne_sw",          "diagonal2",    18 * SCALE, 16 * SCALE },
-    {"top_right_corner",    "diagonal2",    18 * SCALE, 16 * SCALE },
-    {"bottom_left_corner",  "diagonal2",    18 * SCALE, 16 * SCALE },
+    {"nesw-resize",         "diagonal2",    18, 16 },
+    {"size_ne_sw",          "diagonal2",    18, 16 },
+    {"top_right_corner",    "diagonal2",    18, 16 },
+    {"bottom_left_corner",  "diagonal2",    18, 16 },
 
-    {"ns-resize",           "vertical",     18 * SCALE, 16 * SCALE },
-    {"size_ns",             "vertical",     18 * SCALE, 16 * SCALE },
-    {"sb_v_double_arrow",   "vertical",     18 * SCALE, 16 * SCALE },
-    {"v_double_arrow",      "vertical",     18 * SCALE, 16 * SCALE },
-    {"top_side",            "vertical",     18 * SCALE, 16 * SCALE },
-    {"bottom_side",         "vertical",     18 * SCALE, 16 * SCALE },
+    {"ns-resize",           "vertical",     18, 16 },
+    {"size_ns",             "vertical",     18, 16 },
+    {"sb_v_double_arrow",   "vertical",     18, 16 },
+    {"v_double_arrow",      "vertical",     18, 16 },
+    {"top_side",            "vertical",     18, 16 },
+    {"bottom_side",         "vertical",     18, 16 },
 
-    {"ew-resize",           "horizontal",   18 * SCALE, 16 *SCALE },
-    {"size_we",             "horizontal",   18 * SCALE, 16 *SCALE },
-    {"sb_h_double_arrow",   "horizontal",   18 * SCALE, 16 *SCALE },
-    {"h_double_arrow",      "horizontal",   18 * SCALE, 16 *SCALE },
-    {"left_side",           "horizontal",   18 * SCALE, 16 *SCALE },
-    {"right_side",          "horizontal",   18 * SCALE, 16 *SCALE },
+    {"ew-resize",           "horizontal",   18, 16 },
+    {"size_we",             "horizontal",   18, 16 },
+    {"sb_h_double_arrow",   "horizontal",   18, 16 },
+    {"h_double_arrow",      "horizontal",   18, 16 },
+    {"left_side",           "horizontal",   18, 16 },
+    {"right_side",          "horizontal",   18, 16 },
 
     {"up_arrow",            "alternate",    0,  0  },
     {"center_ptr",          "alternate",    0,  0  },

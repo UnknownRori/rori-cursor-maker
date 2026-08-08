@@ -8,5 +8,10 @@ compile_commands.json
 *.dll
 *.a
 
+*.png
+*.ani
+*.inf
+*.theme
+
 install_inf.h
 theme_x11.h

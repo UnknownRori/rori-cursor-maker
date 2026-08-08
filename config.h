@@ -7,7 +7,6 @@
 
 #define TEMP_BUFFER         4096 * 2
 #define OUTPUT_DIR          "dist"
-#define SRC_DIR             "tests"
 #define SCALE               3
 
 #define TOTAL_FOLDER_MAPPING 17
@@ -24,11 +23,12 @@ typedef struct {
     uint16_t    width;
     uint16_t    height;
     uint16_t    rate;
+    uint8_t     scale;
 } config_t;
 
 int get_index_mapping(const char* name);
 
-extern const config_t config;
+extern config_t config;
 
 extern const char* FOLDER_MAPPING[];
 

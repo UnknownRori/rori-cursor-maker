@@ -30,8 +30,8 @@ void create_cursors(
             f->size, 
             config.width, 
             config.height, 
-            xhotspot, 
-            yhotspot, 
+            xhotspot * config.scale, 
+            yhotspot * config.scale, 
             &o
         );
         nob_da_append(out, cur);
