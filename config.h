@@ -3,7 +3,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#define DEFAULT_NAME        "Eau Rouge"
+#define DEFAULT_NAME        "Lilith Itou"
 
 #define TEMP_BUFFER         4096 * 2
 #define OUTPUT_DIR          "dist"

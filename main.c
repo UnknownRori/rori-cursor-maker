@@ -87,6 +87,7 @@ int main(int argc, char** argv)
 
     if (args_cli.build) {
         if (args_cli.src_dir == NULL) args_cli.src_dir = ".";
+        if (args_cli.name == NULL) args_cli.name = DEFAULT_NAME;
         build(args_cli.name, args_cli.src_dir);
         return 0;
     }
