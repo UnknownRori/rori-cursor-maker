@@ -15,6 +15,18 @@ Go visit my [Ko-fi](https://ko-fi.com/unknownrori) page for cursor stuff
 
 ![](./docs/lilith-itou-cursor.gif)
 
+## Feature
+
+- Automatic project creation
+- Batching build and fast
+- Automatic scaling
+- Pre-configured offset based on my cursor making style
+- Cross-platform without any OS specific except for standard I/O operation
+
+## Special Mention
+
+Thanks to tsoding for providing amazing single-header file of `nob`.
+
 ## LICENSE
 
 MIT
