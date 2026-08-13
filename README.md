@@ -22,6 +22,7 @@ Go visit my [Ko-fi](https://ko-fi.com/unknownrori) page for cursor stuff
 - Automatic scaling
 - Pre-configured offset based on my cursor making style
 - Cross-platform without any OS specific except for standard I/O operation
+- Built a .exe to streamline user installation
 
 ## Special Mention
 
