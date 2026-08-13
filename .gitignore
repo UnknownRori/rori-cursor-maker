@@ -1,6 +1,8 @@
 builddir/
 build/
 dist/
+temp/
+windows_installer.c
 compile_commands.json
 
 *.exe
@@ -12,6 +14,9 @@ compile_commands.json
 *.ani
 *.inf
 *.theme
+*.rc
+*.manifest
+*.ico
 
 install_inf.h
 theme_x11.h
