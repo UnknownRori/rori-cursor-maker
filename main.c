@@ -185,7 +185,9 @@ int main(int argc, char** argv)
         return 0;
     }
 
-    print_help(program_name);
+    if (!args_cli.build && !args_cli.build_windows) {
+        print_help(program_name);
+    }
 
     return 0;
 }
